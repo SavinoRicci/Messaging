@@ -3,7 +3,10 @@
 <body>
 <Title>Genesys SIT Messaging Portal</Title>
 <h1>Genesys SIT Messaging Portal</h1>
+<br>
 <h1>DEKA Web Messaging</h1>
+<br><br>
+<a href="index.html"><Button>Home Page</Button></a>
     <script type="text/javascript" charset="utf-8">
         (function (g, e, n, es, ys) {
           g['_genesysJs'] = e;
@@ -17,12 +20,20 @@
           environment: 'prod-euc1',
           deploymentId: 'c1e923dd-f18f-4aa6-b075-80a093370ba8'
         });
+        Genesys("subscribe", "Database.ready", function() {
+        console.log("Database plugin is ready.")
+});
+    Genesys("command", "Database.set", {
+  messaging: {
+    customAttributes: {
+      name: "Homer Simpson",
+      Email_Address: "Homer.Simpson@Springfield.com",
+          }
+  }
+});
       </script>
+      
 </body>
 </html>
 
 
-
-
-</body>
-</html>

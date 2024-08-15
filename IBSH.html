@@ -3,10 +3,14 @@
 <body>
 <Title>Genesys SIT Messaging Portal</Title>
 <h1>Genesys SIT Messaging Portal</h1>
+<br>
 <h1>IBSH Web Messaging</h1>
-<h2>Name</h2>
+<br><br>
+<a href="index.html"><Button>Home Page</Button></a>
+<br><br>
+<h2>Email</h2>
 <input type='text' id='Email'/>
-<h2>Language</h2>
+<h2>Name</h2>
 <input type='text' id='Name'/>
 <script type="text/javascript" charset="utf-8">
   (function (g, e, n, es, ys) {
@@ -21,21 +25,15 @@
     environment: 'prod-euc1',
     deploymentId: '8372f056-7f9d-4620-bf39-d35c2f6fca2c'
   });
-  var Email = document.getElementById('Email').value;
-  var Name   = document.getElementById('Name').value;
 
-    Genesys("subscribe", "Database.ready", function() {
-        console.log("Database plugin is ready.")
-});
     Genesys("command", "Database.set", {
   messaging: {
     customAttributes: {
-      name: Name,
-      Email_Address: Email,
+      name: "Homer Simpson",
+      Email_Address: "Homer.Simpson@Springfield.com",
           }
-         } 
-        }
-)
+  }
+});
 </script>
 </body>
 </html>
