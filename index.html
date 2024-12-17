@@ -10,6 +10,15 @@
             alert('togglemessenger() function called!');
             // You can add any other logic here for toggling the messenger
         }
+        window.addEventListener('beforeunload', function(event) {
+    // Call clearConversation before the page is unloaded
+    clearConversation();
+
+    // The returnValue property is used to show a confirmation dialog in some browsers.
+    // It may not always work in modern browsers (especially Chrome and Firefox).
+    event.returnValue = '';  // Some browsers may require this to show a warning message
+});
+
     </script>
 </head>
 <body>
@@ -32,10 +41,7 @@
       deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
     });
  
-  window.addEventListener('beforeunload', function(event) {
-            // Call clearConversation before the page is unloaded
-            clearConversation();
-      
+    
    Genesys("subscribe", "Database.ready", function() {
               console.log("Database plugin is ready.")
           });
