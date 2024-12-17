@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Messaging v2</title>
+    <title>Web Messaging</title>
     <script>
         // JavaScript function to be triggered by the button
         function togglemessenger() {
@@ -58,7 +58,17 @@
               )
           }
             function clearConversation() {
-                Genesys("subscribe", "Messenger.cleared", function(){});
+                Genesys("command", "MessagingService.clearConversation", 
+                    {}, 
+                function() {
+                    // Fulfilled callback
+                    console.log("Conversation cleared successfully!");
+                    },
+                function() {
+                // Rejected callback
+                console.error("Failed to clear the conversation.");
+        }
+    );
 }
 
               
