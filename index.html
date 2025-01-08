@@ -6,9 +6,10 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging</h1>
+    <h1>Web Messaging v2</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
+    <element onunload="closemessenger()"> 
 </body>
 
 <script type="text/javascript" charset="utf-8">
@@ -54,11 +55,11 @@
       Genesys("command", "Messenger.close");
     };
 
-    window.addEventListener('beforeunload', function(event) {
-    // Call clearConversation before the page is unloaded
-    closemessenger();
-    event.returnValue = '';
-});
+//     window.addEventListener('beforeunload', function(event) {
+//     // Call clearConversation before the page is unloaded
+//     closemessenger();
+//     event.returnValue = '';
+// });
 
 function closemessenger() {
     Genesys("command", "Messenger.close", {},
