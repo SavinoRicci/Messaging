@@ -6,7 +6,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging</h1>
+    <h1>Web Messaging V3</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -30,11 +30,13 @@
     environment: 'prod-euc1',
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
-  object.addEventListener("unload", closemessenger());
+
   function genesysglobal() {
     // Subscribe to Database plugin readiness
     Genesys("subscribe", "Database.ready", function() {
       console.log("Database plugin is ready.");
+      Genesys("command", "Messenger.close");
+      console.log("Minimise widget");
     });
 
     // Set custom attributes in the Database
@@ -60,16 +62,16 @@
 //     event.returnValue = '';
 // });
 
-function closemessenger() {
-    Genesys("command", "Messenger.close", {},
-          function() {
-            /* fulfilled callback */
-          },
-          function() {
-            /* rejected callback */
-          }
-        );    
-}
+// function closemessenger() {
+//     Genesys("command", "Messenger.close", {},
+//           function() {
+//             /* fulfilled callback */
+//           },
+//           function() {
+//             /* rejected callback */
+//           }
+//         );    
+// }
 
     // // Subscribe to conversation disconnected event
     // Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}) {
