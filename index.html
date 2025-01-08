@@ -6,10 +6,9 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging v2</h1>
+    <h1>Web Messaging</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
-    <element onunload="closemessenger()"> 
 </body>
 
 <script type="text/javascript" charset="utf-8">
@@ -26,6 +25,7 @@
       // Genesys script is loaded, now we can define the toggleMessenger function
       defineToggleMessenger();
     };
+    object.addEventListener("unload", closemessenger()); 
     document.head.appendChild(ys);
   })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
     environment: 'prod-euc1',
