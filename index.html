@@ -6,7 +6,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V3</h1>
+    <h1>Web Messaging V4</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -20,7 +20,19 @@
     };
     g[e].t = 1 * new Date();
     g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; 
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8';
+    
+    function closemessenger() {
+    Genesys("command", "Messenger.close", {},
+          function() {
+            /* fulfilled callback */
+          },
+          function() {
+            /* rejected callback */
+          }
+        );    
+}
+
     ys.onload = function () {
       // Genesys script is loaded
       genesysglobal(); closemessenger();
@@ -60,16 +72,7 @@
 //     event.returnValue = '';
 // });
 
-function closemessenger() {
-    Genesys("command", "Messenger.close", {},
-          function() {
-            /* fulfilled callback */
-          },
-          function() {
-            /* rejected callback */
-          }
-        );    
-}
+
 
     // // Subscribe to conversation disconnected event
     // Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}) {
