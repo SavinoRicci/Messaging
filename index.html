@@ -23,16 +23,15 @@
     ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; 
     ys.onload = function () {
       // Genesys script is loaded, now we can define the toggleMessenger function
-      defineToggleMessenger();
-    };
-    object.addEventListener("unload", closemessenger()); 
+      genesysglobal();
+    }; 
     document.head.appendChild(ys);
   })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
     environment: 'prod-euc1',
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
-
-  function defineToggleMessenger() {
+  object.addEventListener("unload", closemessenger());
+  function genesysglobal() {
     // Subscribe to Database plugin readiness
     Genesys("subscribe", "Database.ready", function() {
       console.log("Database plugin is ready.");
