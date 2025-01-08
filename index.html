@@ -3,31 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Messaging v1</title>
-    <script>
-        // JavaScript function to be triggered by the button
-        function togglemessenger() {
-            alert('togglemessenger() function called!');
-            // You can add any other logic here for toggling the messenger
-        }
-        window.addEventListener('beforeunload', function(event) {
-    // Call clearConversation before the page is unloaded
-    clearConversation();
-
-    // The returnValue property is used to show a confirmation dialog in some browsers.
-    // It may not always work in modern browsers (especially Chrome and Firefox).
-    event.returnValue = '';  // Some browsers may require this to show a warning message
-});
-
-    </script>
+    <title>Web Messaging</title>
 </head>
 <body>
     <h1>Web Messaging</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
-    
 </body>
+
 <script type="text/javascript" charset="utf-8">
+  // Define the Genesys script
   (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
     g[e] = g[e] || function () {
@@ -35,43 +20,76 @@
     };
     g[e].t = 1 * new Date();
     g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; 
+    ys.onload = function () {
+      // Genesys script is loaded, now we can define the toggleMessenger function
+      defineToggleMessenger();
+    };
+    document.head.appendChild(ys);
   })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
     environment: 'prod-euc1',
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
-   Genesys("subscribe", "Database.ready", function() {
-              console.log("Database plugin is ready.")
-          });
-          Genesys("command", "Database.set", {
-              messaging: {
-                  customAttributes: {
-                      name: username,
-                      Locale: locale,
-                      profileId: profileId
-                  }
-              }
-          });
-            function toggleMessenger(){
-              Genesys("command", "Messenger.open", {},
-                Genesys("command", "Messenger.close")
-              )
-          }
-            function clearConversation() {
-                Genesys("command", "MessagingService.clearConversation", 
-                    {}, 
-                function() {
-                    // Fulfilled callback
-                    console.log("Conversation cleared successfully!");
-                    },
-                function() {
-                // Rejected callback
-                console.error("Failed to clear the conversation.");
+
+  function defineToggleMessenger() {
+    // Subscribe to Database plugin readiness
+    Genesys("subscribe", "Database.ready", function() {
+      console.log("Database plugin is ready.");
+    });
+
+    // Set custom attributes in the Database
+    Genesys("command", "Database.set", {
+      messaging: {
+        customAttributes: {
+          name: "username", // Replace with actual variable values
+          Locale: "locale",
+          profileId: "profileId"
         }
-    );
+      }
+    });
+
+    // Define the toggleMessenger function after Genesys script is fully loaded
+    window.toggleMessenger = function() {
+      Genesys("command", "Messenger.open", {});
+      Genesys("command", "Messenger.close");
+    };
+
+    window.addEventListener('beforeunload', function(event) {
+    // Call clearConversation before the page is unloaded
+    clearConversation();
+    event.returnValue = '';
+});
+
+function closemessenger() {
+    Genesys("command", "Messenger.close", {},
+          function() {
+            /* fulfilled callback */
+          },
+          function() {
+            /* rejected callback */
+          }
+        );    
 }
 
-              
-          
-          </script>
+    // // Subscribe to conversation disconnected event
+    // Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}) {
+    //   console.log(data);
+    //   handledisconnect(data);
+    // });
+
+    // // Handle disconnect event
+    // function handledisconnect(data) {
+    //   if (event.eventType === "Presence" && event.presence && event.presence.type === "Disconnect"){
+        // Genesys("command", "Messenger.close", {},
+        //   function() {
+        //     /* fulfilled callback */
+        //   },
+        //   function() {
+        //     /* rejected callback */
+        //   }
+        // );
+    //   }
+    }
+//   }
+</script>
 </html>
