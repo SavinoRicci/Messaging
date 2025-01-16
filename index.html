@@ -5,7 +5,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V4</h1>
+    <h1>Web Messaging V5</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -48,6 +48,14 @@ Genesys("command", "Messenger.clear");console.log("Clear Messenger");
 			  function(o){    // if rejected
 				Genesys("command", "Messenger.close");
 		   }
-		);}
+		);
+
+    function clearmessenger(){
+      Genesys("command", "Messenger.clear");
+    }
+window.onload = function() {
+    clearmessenger();
+  };
+}
 </script>
 </html>
