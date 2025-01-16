@@ -5,7 +5,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V7</h1>
+    <h1>Web Messaging V4</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -59,7 +59,14 @@ window.onload = function() {
   };
 
 function clearmessenger(){
-    Genesys("command", "Messenger.clear");
+    Genesys("command", "MessagingService.clearConversation", 
+    {}, 
+    function() {
+    /*fulfilled callback*/
+    },
+    function() {
+    /*rejected callback*/
+    });
     console.log("Messenger cleared function");
     }
 </script>
