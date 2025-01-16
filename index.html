@@ -5,7 +5,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V5</h1>
+    <h1>Web Messaging V6</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -40,21 +40,24 @@
     }
   });
 
-Genesys("command", "Messenger.clear");console.log("Clear Messenger");
+Genesys("command", "Messenger.clear");
+console.log("Clear Messenger");
 
-  function toggleMessenger(){
-			Genesys("command", "Messenger.open", {},
-			  function(o){},  // if resolved
-			  function(o){    // if rejected
-				Genesys("command", "Messenger.close");
+function toggleMessenger(){
+	Genesys("command", "Messenger.open", {},
+		  function(o){},  // if resolved
+		  function(o){    // if rejected
+	Genesys("command", "Messenger.close");
 		   }
 		);
 
-    function clearmessenger(){
+        function clearmessenger(){
       Genesys("command", "Messenger.clear");
+        console.log("Messenger cleared function");
     }
 window.onload = function() {
     clearmessenger();
+    console.log("Messenger cleared on load");
   };
 }
 </script>
