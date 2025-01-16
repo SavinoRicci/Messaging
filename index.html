@@ -5,7 +5,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V10</h1>
+    <h1>Web Messaging V11</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -26,19 +26,6 @@
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
 
-  Genesys("subscribe", "Database.ready", function() {
-    console.log("Database plugin is ready.")
-  });
-
-  Genesys("command", "Database.set", {
-    messaging: {
-      customAttributes: {
-        name: "John Doe", // Replace ASSIGN_VALUE with actual value
-        Locale: "en-US"   // Replace ASSIGN_VALUE with actual value
-      }
-    }
-  });
-
   function toggleMessenger() {
     Genesys("command", "Messenger.open", {},
       function(o) { /* fulfilled callback */ },
@@ -48,25 +35,47 @@
     );
   }
 
+  window.onload = function() {
+    // Clear messenger with delay
+    setTimeout(function() {
+        clearmessenger();
+        console.log("Messenger closed on load");
+    }, 1000); // 1 second delay
+    
   function clearmessenger() {
-    Genesys("command", "MessagingService.clearConversation", 
-      {}, 
-      function() { /* fulfilled callback */ },
-      function() { /* rejected callback */ }
-    );
-    console.log("Messenger cleared function");
+   Genesys("command", "Messenger.close");
+    console.log("Messenger closed");
   }
 
-  window.onload = function() {
-    clearmessenger();
-    console.log("Messenger cleared on load");
-  };
 
-  Genesys("command", "Messenger.clear");
-  console.log("Clear Messenger");
+    // Subscribe to MessagingService.ready with delay
+    setTimeout(function() {
+        Genesys('subscribe', 'MessagingService.ready', () => {
+            console.log("MessagingService is ready");
+        });
+    }, 2000); // 3 seconds delay (cumulative)
 
-  Genesys('subscribe', 'MessagingService.ready', () => {
-    console.log("MessagingService is ready");
-  });
+    // Subscribe to Database.ready with delay
+    setTimeout(function() {
+        Genesys("subscribe", "Database.ready", function() {
+            console.log("Database plugin is ready.");
+        });
+    }, 3000); // 4 seconds delay (cumulative)
+
+    // Database.set command with delay
+    setTimeout(function() {
+        Genesys("command", "Database.set", {
+            messaging: {
+                customAttributes: {
+                    name: "John Doe", // Replace with actual value
+                    Locale: "en-US"   // Replace with actual value
+                }
+            }
+        });
+    }, 5000); // 5 seconds delay (cumulative)
+};
+
+
+
 </script>
 </html>
