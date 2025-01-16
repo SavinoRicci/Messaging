@@ -5,17 +5,12 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V9</h1>
+    <h1>Web Messaging V10</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
 
 <script type="text/javascript" charset="utf-8">
- window.onload = function() {
-    clearmessenger();
-    console.log("Messenger cleared on load");
-  };
-
   // Define the Genesys script
   (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
@@ -34,7 +29,6 @@
   Genesys("subscribe", "Database.ready", function() {
     console.log("Database plugin is ready.")
   });
-    
 
   Genesys("command", "Database.set", {
     messaging: {
@@ -45,31 +39,34 @@
     }
   });
 
-Genesys("command", "Messenger.clear");
-console.log("Clear Messenger");
+  function toggleMessenger() {
+    Genesys("command", "Messenger.open", {},
+      function(o) { /* fulfilled callback */ },
+      function(o) { // if rejected
+        Genesys("command", "Messenger.close");
+      }
+    );
+  }
 
-function toggleMessenger(){
-	Genesys("command", "Messenger.open", {},
-		  function(o){},  // if resolved
-		  function(o){    // if rejected
-	Genesys("command", "Messenger.close");
-		   }
-		);      
-}
-
-Genesys('subscribe', 'MessagingService.ready', () => {
-});
-
-function clearmessenger(){
+  function clearmessenger() {
     Genesys("command", "MessagingService.clearConversation", 
-    {}, 
-    function() {
-    /*fulfilled callback*/
-    },
-    function() {
-    /*rejected callback*/
-    });
+      {}, 
+      function() { /* fulfilled callback */ },
+      function() { /* rejected callback */ }
+    );
     console.log("Messenger cleared function");
-    }
+  }
+
+  window.onload = function() {
+    clearmessenger();
+    console.log("Messenger cleared on load");
+  };
+
+  Genesys("command", "Messenger.clear");
+  console.log("Clear Messenger");
+
+  Genesys('subscribe', 'MessagingService.ready', () => {
+    console.log("MessagingService is ready");
+  });
 </script>
 </html>
