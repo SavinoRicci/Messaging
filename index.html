@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,79 +19,35 @@
     };
     g[e].t = 1 * new Date();
     g[e].c = es;
-    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8';
-    
-    function closemessenger() {
-    Genesys("command", "Messenger.close", {},
-          function() {
-            /* fulfilled callback */
-          },
-          function() {
-            /* rejected callback */
-          }
-        );    
-}
-
-    ys.onload = function () {
-      // Genesys script is loaded
-      genesysglobal(); closemessenger();
-    }; 
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; 
     document.head.appendChild(ys);
   })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
     environment: 'prod-euc1',
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
 
-  function genesysglobal() {
-    // Subscribe to Database plugin readiness
-    Genesys("subscribe", "Database.ready", function() {
-      console.log("Database plugin is ready.");
-    });
+  Genesys("subscribe", "Database.ready", function() {
+    console.log("Database plugin is ready.")
+  });
+    
 
-    // Set custom attributes in the Database
-    Genesys("command", "Database.set", {
-      messaging: {
-        customAttributes: {
-          name: "username", // Replace with actual variable values
-          Locale: "locale",
-          profileId: "profileId"
-        }
+  Genesys("command", "Database.set", {
+    messaging: {
+      customAttributes: {
+        name: "John Doe", // Replace ASSIGN_VALUE with actual value
+        Locale: "en-US"   // Replace ASSIGN_VALUE with actual value
       }
-    });
-
-    // Define the toggleMessenger function after Genesys script is fully loaded
-    window.toggleMessenger = function() {
-      Genesys("command", "Messenger.open", {});
-      Genesys("command", "Messenger.close");
-    };
-
-//     window.addEventListener('beforeunload', function(event) {
-//     // Call clearConversation before the page is unloaded
-//     closemessenger();
-//     event.returnValue = '';
-// });
-
-
-
-    // // Subscribe to conversation disconnected event
-    // Genesys("subscribe", "MessagingService.conversationDisconnected", function({data}) {
-    //   console.log(data);
-    //   handledisconnect(data);
-    // });
-
-    // // Handle disconnect event
-    // function handledisconnect(data) {
-    //   if (event.eventType === "Presence" && event.presence && event.presence.type === "Disconnect"){
-        // Genesys("command", "Messenger.close", {},
-        //   function() {
-        //     /* fulfilled callback */
-        //   },
-        //   function() {
-        //     /* rejected callback */
-        //   }
-        // );
-    //   }
     }
-//   }
+  });
+
+Genesys("command", "Messenger.clear");console.log("Clear Messenger");
+
+  function toggleMessenger(){
+			Genesys("command", "Messenger.open", {},
+			  function(o){},  // if resolved
+			  function(o){    // if rejected
+				Genesys("command", "Messenger.close");
+		   }
+		);}
 </script>
 </html>
