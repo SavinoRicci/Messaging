@@ -5,12 +5,17 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V8</h1>
+    <h1>Web Messaging V9</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
 
 <script type="text/javascript" charset="utf-8">
+ window.onload = function() {
+    clearmessenger();
+    console.log("Messenger cleared on load");
+  };
+
   // Define the Genesys script
   (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
@@ -49,14 +54,11 @@ function toggleMessenger(){
 		  function(o){    // if rejected
 	Genesys("command", "Messenger.close");
 		   }
-		);
-
-        
+		);      
 }
-window.onload = function() {
-    clearmessenger();
-    console.log("Messenger cleared on load");
-  };
+
+Genesys('subscribe', 'MessagingService.ready', () => {
+});
 
 function clearmessenger(){
     Genesys("command", "MessagingService.clearConversation", 
