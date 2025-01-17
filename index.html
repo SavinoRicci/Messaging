@@ -5,7 +5,7 @@
     <title>Web Messaging</title>
 </head>
 <body>
-    <h1>Web Messaging V11</h1>
+    <h1>Web Messaging V12</h1>
     <br><br><br>
     <button onclick="toggleMessenger()">Chat With Us!</button>
 </body>
@@ -35,35 +35,30 @@
     );
   }
 
-  window.onload = function() {
-    // Clear messenger with delay
-    setTimeout(function() {
-        clearmessenger();
+  window.onbeforeunload = function() {
+    // Clear messenger 
+        closemessenger();
         console.log("Messenger closed on load");
-    }, 1000); // 1 second delay
+
     
-  function clearmessenger() {
+  function closemessenger() {
    Genesys("command", "Messenger.close");
     console.log("Messenger closed");
   }
 
 
-    // Subscribe to MessagingService.ready with delay
-    setTimeout(function() {
+    // Subscribe to MessagingService.ready
         Genesys('subscribe', 'MessagingService.ready', () => {
             console.log("MessagingService is ready");
         });
-    }, 2000); // 3 seconds delay (cumulative)
+    },
 
     // Subscribe to Database.ready with delay
-    setTimeout(function() {
         Genesys("subscribe", "Database.ready", function() {
             console.log("Database plugin is ready.");
         });
-    }, 3000); // 4 seconds delay (cumulative)
 
-    // Database.set command with delay
-    setTimeout(function() {
+    // Database.set command
         Genesys("command", "Database.set", {
             messaging: {
                 customAttributes: {
@@ -72,10 +67,6 @@
                 }
             }
         });
-    }, 5000); // 5 seconds delay (cumulative)
-};
-
-
 
 </script>
 </html>
