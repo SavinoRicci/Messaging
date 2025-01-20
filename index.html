@@ -62,6 +62,11 @@ body, html {height: 100%}
         closemessenger();
         console.log("Messenger closed on load");
 
+  // Subscribe to MessagingService.ready
+  Genesys('subscribe', 'MessagingService.ready', () => {
+            console.log("MessagingService is ready");
+        });
+
     
   function closemessenger() {
     Genesys("command", "Messenger.clear");
@@ -70,10 +75,6 @@ body, html {height: 100%}
     console.log("Messenger cleared and closed");
   }
 
-    // Subscribe to MessagingService.ready
-        Genesys('subscribe', 'MessagingService.ready', () => {
-            console.log("MessagingService is ready");
-        });
     },
 
     // Subscribe to Database.ready with delay
