@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Messaging</title>
+</head>
+<body>
+    <h1>Web Messaging V11</h1>
+    <br><br><br>
+    <button onclick="toggleMessenger()">Chat With Us!</button>
+</body>
+
+<script type="text/javascript" charset="utf-8">
+  // Define the Genesys script
+  (function (g, e, n, es, ys) {
+    g['_genesysJs'] = e;
+    g[e] = g[e] || function () {
+      (g[e].q = g[e].q || []).push(arguments)
+    };
+    g[e].t = 1 * new Date();
+    g[e].c = es;
+    ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; 
+    document.head.appendChild(ys);
+  })(window, 'Genesys', 'https://apps.mypurecloud.de/genesys-bootstrap/genesys.min.js', {
+    environment: 'prod-euc1',
+    deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
+  });
+
+  function toggleMessenger() {
+    Genesys("command", "Messenger.open", {},
+      function(o) { /* fulfilled callback */ },
+      function(o) { // if rejected
+        Genesys("command", "Messenger.close");
+      }
+    );
+  }
+
+  window.onload = function() {
+    // Clear messenger with delay
+    setTimeout(function() {
+        clearmessenger();
+        console.log("Messenger closed on load");
+    }, 1000); // 1 second delay
+    
+  function clearmessenger() {
+   Genesys("command", "Messenger.close");
+    console.log("Messenger closed");
+  }
+
+
+    // Subscribe to MessagingService.ready with delay
+    setTimeout(function() {
+        Genesys('subscribe', 'MessagingService.ready', () => {
+            console.log("MessagingService is ready");
+        });
+    }, 2000); // 3 seconds delay (cumulative)
+
+    // Subscribe to Database.ready with delay
+    setTimeout(function() {
+        Genesys("subscribe", "Database.ready", function() {
+            console.log("Database plugin is ready.");
+        });
+    }, 3000); // 4 seconds delay (cumulative)
+
+    // Database.set command with delay
+    setTimeout(function() {
+        Genesys("command", "Database.set", {
+            messaging: {
+                customAttributes: {
+                    name: "John Doe", // Replace with actual value
+                    Locale: "en-US"   // Replace with actual value
+                }
+            }
+        });
+    }, 5000); // 5 seconds delay (cumulative)
+};
+
+
+
+</script>
+</html>
