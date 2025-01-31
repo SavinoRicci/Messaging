@@ -43,6 +43,14 @@ body, html {height: 100%}
     environment: 'prod-euc1',
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
+  
+  function disableclick(event){
+           if(event.button==2){ // this value is 3 for some othe browser
+            // Rest of code
+         return false;    
+       }
+    }
+document.body.onclick = disableclick()
 
   function toggleMessenger() {
     Genesys("command", "Messenger.open", {},
