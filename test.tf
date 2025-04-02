@@ -1,8 +1,8 @@
 terraform {
   cloud {
-    organization = "Computacenter-GIS-Genesys"
+    organization = "Test"
     workspaces {
-      name = "cceudev1"
+      name = "Workspace1"
     }
   }
   required_providers {
