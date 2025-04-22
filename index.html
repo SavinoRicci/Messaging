@@ -76,6 +76,7 @@ function startFlashingTitle(message = '🔔 New Message!') {
 
     flashInterval = setInterval(() => {
         document.title = (document.title === message) ? originalTitle : message;
+        console.log(document.title)
     }, 1000);
 }
 
@@ -88,12 +89,11 @@ function stopFlashingTitle() {
 // Your Genesys event subscription
 Genesys("subscribe", "MessagingService.messagesReceived", function({ data }) {
     console.log("Message received:", data);
-    startFlashingTitle();
 
-    // Only start flashing if tab is not in focus
-    // if (document.hidden) {
-    //     startFlashingTitle();
-    // }
+    //Only start flashing if tab is not in focus
+    if (document.hidden) {
+        startFlashingTitle();
+    }
 });
 
 // Optional: stop flashing when user comes back
