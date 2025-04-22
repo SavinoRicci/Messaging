@@ -25,6 +25,7 @@ body, html {height: 100%}
       <h1 class="w3-jumbo w3-animate-top" style="color:white;">Web Messaging Sandbox</h1>
      <hr class="w3-border-grey" style="margin:auto;width:40%">
         <button onclick="toggleMessenger()" class="w3-button w3-padding-large w3-round-large w3-blue w3-hover-light-blue" style="margin-top:20px;">Chat With Us!</button>
+
 </div>
 </body>
 
@@ -44,14 +45,6 @@ body, html {height: 100%}
     deploymentId: '72c9273b-c116-4754-8969-bd6e7061312f'
   });
   
-  // function disableclick(event){
-  //          if(event.button==2){ // this value is 3 for some othe browser
-  //           // Rest of code
-  //        return false;    
-  //      }
-  //   }
-// document.body.onclick = disableclick()
-
   function toggleMessenger() {
     Genesys("command", "Messenger.open", {},
       function(o) { /* fulfilled callback */ },
@@ -70,6 +63,45 @@ body, html {height: 100%}
   Genesys('subscribe', 'MessagingService.ready', () => {
             console.log("MessagingService is ready");
         });
+
+////////////////////////////////////// ICON FLASH/////////////////////////////////////////////
+
+let flashing = false;
+let flashInterval;
+
+function startFlashingTitle(message = '🔔 New Message!') {
+    if (flashing) return;
+    flashing = true;
+    const originalTitle = document.title;
+
+    flashInterval = setInterval(() => {
+        document.title = (document.title === message) ? originalTitle : message;
+    }, 1000);
+}
+
+function stopFlashingTitle() {
+    flashing = false;
+    clearInterval(flashInterval);
+    document.title = 'Back to normal'; // Or store the original title
+}
+
+// Your Genesys event subscription
+Genesys("subscribe", "MessagingService.messagesReceived", function({ data }) {
+    console.log("Message received:", data);
+
+    // Only start flashing if tab is not in focus
+    if (document.hidden) {
+        startFlashingTitle();
+    }
+});
+
+// Optional: stop flashing when user comes back
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        stopFlashingTitle();
+    }
+});
+////////////////////////////////////// ICON FLASH/////////////////////////////////////////////
 
     
   function closemessenger() {
