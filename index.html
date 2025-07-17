@@ -54,23 +54,23 @@ body, html {height: 100%}
     );
   }
 
-  window.onbeforeunload = function() {
-    // Clear messenger 
-        closemessenger();
-        console.log("Messenger closed on load");
+  // window.onbeforeunload = function() {
+  //   // Clear messenger 
+  //       closemessenger();
+  //       console.log("Messenger closed on load");
 
-  // Subscribe to MessagingService.ready
-  Genesys('subscribe', 'MessagingService.ready', () => {
-            console.log("MessagingService is ready");
-        });
+  // // Subscribe to MessagingService.ready
+  // Genesys('subscribe', 'MessagingService.ready', () => {
+  //           console.log("MessagingService is ready");
+  //       });
     
-  function closemessenger() {
-    Genesys("command", "MessagingService.clearConversation");
-      Genesys("command", "Messenger.clear");
-        Genesys("command", "Messenger.close");
-    console.log("Messenger cleared and closed");
-        } 
-    },
+  // function closemessenger() {
+  //   Genesys("command", "MessagingService.clearConversation");
+  //     Genesys("command", "Messenger.clear");
+  //       Genesys("command", "Messenger.close");
+  //   console.log("Messenger cleared and closed");
+  //       } 
+  //   },
 
     // Subscribe to Database.ready with delay
         Genesys("subscribe", "Database.ready", function() {
