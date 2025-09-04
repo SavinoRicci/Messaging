@@ -58,8 +58,8 @@ body, html {height: 100%}
     Genesys("subscribe", "Toaster.ready", () => {
       Genesys("command", "Toaster.open",
         {
-          title: "Welcome!",
-          body: "Thanlk you for contact the service desk. If you need further assistance, please send a new message",
+          title: "Your Conversation Has Ended",
+          body: "Thank you for contacting the service desk. If you need further assistance, please send a new message",
           // buttons: {
           //   type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
           //   primary: "Get Support", // optional, default value is "Accept"
@@ -123,7 +123,7 @@ Genesys("subscribe", "Toaster.ready", () => {
   Genesys("command", "Toaster.open",
     {
       title: "Welcome!",
-      body: "Need assistance? Click the button below to chat with an agent.",
+      body: "Click the button below and send a message to start a conversation.",
       // buttons: {
       //   type: "binary", // required when 'buttons' is present. Values: "unary" for one action button, "binary" for two action buttons
       //   primary: "Get Support", // optional, default value is "Accept"
